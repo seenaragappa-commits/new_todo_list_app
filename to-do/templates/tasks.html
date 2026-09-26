@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>My Tasks</h2>
+    <form id="task-form" method="POST" action="{{ url_for('add_task') }}">
+        <input type="text" name="content" placeholder="Add a new task" required>
+        <button type="submit">Add Task</button>
+    </form>
+    <ul id="task-list">
+        {% for task in tasks %}
+            <li class="task-item {% if task.completed %}completed{% endif %}" data-task-id="{{ task.id }}">
+                <span class="task-content">{{ task.content }}</span>
+                <div class="task-actions">
+                    <button class="toggle-btn" data-action="toggle">
+                        {% if task.completed %}Undo{% else %}Complete{% endif %}
+                    </button>
+                    <button class="delete-btn" data-action="delete">Delete</button>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+{% endblock %}
